@@ -17,7 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->text('body');
-            $table->boolean('is_published');
+            $table->boolean('is_published')->default(false);
         });
     }
 

@@ -21,3 +21,8 @@ Route::get('/botman/tinker', 'BotManController@tinker');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::middleware(['web'])->group(function () {
+    Route::post('/questions', 'QuestionsController@store')->name('questions.store');
+});
