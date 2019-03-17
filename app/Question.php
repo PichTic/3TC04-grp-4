@@ -13,7 +13,7 @@ class Question extends Model
 
     public function visitor()
     {
-        return $this->belongsTo('App\Visitor');
+        return $this->hasOne('App\Visitor');
     }
 
     public function answer()

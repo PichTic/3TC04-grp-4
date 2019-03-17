@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +12,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+
+        for ($i=0;$i<5;$i++) {
+
+            $visitor = new App\Visitor(['email' => Str::random(10).'@testgmail.com']);
+
+            $question = new App\Question;
+            $question->body = Str::random(50).'?';
+            $question->save();
+
+            $question->visitor()->save($visitor);
+
+        }
+
     }
 }

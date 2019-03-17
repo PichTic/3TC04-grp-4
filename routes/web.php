@@ -20,9 +20,9 @@ Route::get('/botman/tinker', 'BotManController@tinker');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-
-Route::middleware(['web'])->group(function () {
-    Route::post('/questions', 'QuestionsController@store')->name('questions.store');
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::post('/questions', 'QuestionsController@questionStore')->name('questions.store');
+    Route::get('/question/{id}', 'QuestionsController@answer')->name('question.answer');
+    Route::post('/question/{id}', 'QuestionsController@answerStore')->name('answer.store');
 });

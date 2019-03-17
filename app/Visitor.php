@@ -11,6 +11,6 @@ class Visitor extends Model
 
     public function question()
     {
-        return $this->hasOne('App\Question');
+        return $this->belongsTo('App\Question');
     }
 }
