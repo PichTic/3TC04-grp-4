@@ -38,9 +38,9 @@ class StartConversation extends Conversation
                     $response = VisitorQuestion::find($getId)->answer;
 
                     $this->say('La réponse à ta question : ' . $response->body);
+                    $this->getFeedback();
                 });
 
-                $this->getFeedback();
             }
 
         });
