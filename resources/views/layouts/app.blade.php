@@ -74,5 +74,6 @@
             @yield('content')
         </main>
     </div>
+@yield('pageJS')
 </body>
 </html>

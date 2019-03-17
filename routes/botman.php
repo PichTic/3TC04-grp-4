@@ -1,24 +1,25 @@
 <?php
 use App\Http\Controllers\BotManController;
 use App\Middleware\ReceivedMiddleware;
-use App\Conversations\OnboardingConversation;
+use App\Conversations\StartConversation;
 
 $botman = resolve('botman');
 
-$botman->middleware->received(new ReceivedMiddleware());
 
-$botman->hears('(.*)', function($bot) {
-    $response = $bot->getMessage()->getExtras('rep');
-    $bot->reply($response);
-});
-
-$botman->hears('.*question.*', function ($bot) {
-    $bot->startConversation(new OnboardingConversation);
+$botman->hears('(.*)', function ($bot) {
+    $bot->startConversation(new StartConversation);
 });
 
 $botman->hears('salut', function ($bot) {
     $bot->reply('salut');
 });
+
+// $botman->middleware->received(new ReceivedMiddleware());
+
+// $botman->hears('(.*)', function($bot) {
+//     $response = $bot->getMessage()->getExtras('rep');
+//     $bot->reply($response);
+// });
 
 $botman->hears('Start conversation', BotManController::class . '@startConversation');
 

@@ -7,10 +7,16 @@
             <div class="card">
                 <div class="card-header">Dashboard</div>
                 <div class="card-body">
-                    @include('Dashboard/partials/quesAndAnswForm')
+                    @include('dashboard.partials.quesAndAnswForm')
+                </div>
+                <div class="card-body">
+                    @include('dashboard.partials.incomingQuestions')
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+@section('pageJS')
+
 @endsection

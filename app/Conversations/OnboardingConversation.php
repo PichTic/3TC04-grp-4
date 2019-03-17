@@ -16,8 +16,7 @@ class OnboardingConversation extends Conversation
 
     public function getQuestion()
     {
-        $this->ask("Hey, salut ! Je t'écoute, tu peux poser ta question", function (Answer $answer) {
-
+        $this->ask("Hey, salut ! Veux-tu me poser une question ?", function (Answer $answer) {
             $this->question = $answer->getText();
 
             $this->getAnswer();
@@ -27,7 +26,7 @@ class OnboardingConversation extends Conversation
     public function getAnswer()
     {
         $this->say('Je vais trouver la réponse pour : ' . $this->question);
-        // ici je sais pas comment récupérer un tableau associatif, questions -> réponse
+
         $feedback = Question::create("La réponse te convient ?")
             ->addButtons([
                 Button::create('Oui')->value('oui'),
