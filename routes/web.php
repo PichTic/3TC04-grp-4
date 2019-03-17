@@ -25,4 +25,5 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::post('/questions', 'QuestionsController@questionStore')->name('questions.store');
     Route::get('/question/{id}', 'QuestionsController@answer')->name('question.answer');
     Route::post('/question/{id}', 'QuestionsController@answerStore')->name('answer.store');
+    Route::delete('/question/{id}', 'QuestionsController@answerDelete')->name('answer.delete');
 });

@@ -39,4 +39,9 @@ class QuestionsController extends Controller
         return redirect()->route('home');
     }
 
+    public function answerDelete($id)
+    {
+        $question = Question::findOrFail($id)->delete();
+        return redirect()->route('home');
+    }
 }

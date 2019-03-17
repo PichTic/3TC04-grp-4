@@ -15,7 +15,7 @@ class AddFkToVisitorsTable extends Migration
     {
         Schema::table('visitors', function (Blueprint $table) {
             $table->integer('question_id')->unsigned()->after('id');
-            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

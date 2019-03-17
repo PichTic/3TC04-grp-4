@@ -18,7 +18,6 @@ class AddFkToQuestionsTable extends Migration
             $table->integer('visitor_id')->unsigned()->nullable()->after('id');
             $table->foreign('answer_id')->references('id')->on('answers');
             $table->foreign('visitor_id')->references('id')->on('visitors');
-
         });
     }
 
