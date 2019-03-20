@@ -8,7 +8,7 @@
                 <div class="card-header">Dashboard - Répondre</div>
                 <div class="card-body">
                     <fieldset>
-                        <legend>Répondre à une question</legend>
+                        <legend>Répondre à {{ $question->visitor->email }}</legend>
                         <form method="POST" action="{{route('answer.store', $question->id)}}">
                             @csrf
                             <p>{{ $question->body }}

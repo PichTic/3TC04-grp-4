@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Question;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAnswer;
+use App\Notifications\QuestionAnswered;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\StoreQuestionAndAnswer;
 
 class QuestionsController extends Controller
@@ -36,6 +38,9 @@ class QuestionsController extends Controller
         $answer = $question->answer()->create([
             'body' => $request->reponse,
         ]);
+
+        Notification::route('mail', $question->visitor->email)->notify(new QuestionAnswered($request->reponse));
+
         return redirect()->route('home');
     }
 
