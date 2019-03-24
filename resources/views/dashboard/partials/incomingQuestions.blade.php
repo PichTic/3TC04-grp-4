@@ -13,7 +13,7 @@
             <tr>
                 <td>{{ $question->visitor->email }}</td>
                 <td>{{ $question->body }}</td>
-                <td class="text-right">
+                <td>
                     <a href="{{ route('question.answer', $question->id) }}" class="btn btn-primary text-white"><i class="fas fa-pen"></i></a>
                     <form class="d-inline" method="POST" action="{{ route('answer.delete', $question->id) }}">
                         @csrf
