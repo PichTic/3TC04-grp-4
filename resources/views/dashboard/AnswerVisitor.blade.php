@@ -17,6 +17,7 @@
                                 <input type="text" class="form-control form-control-lg" id="reponse" name="reponse" aria-describedby="reponselHelp" placeholder="Entrez votre réponse">
                             </div>
                             <button type="submit" class="btn btn-lg btn-primary">Envoyer et ajouter la réponse</button>
+                            <a href="{{route('home')}}" class="btn btn-lg float-right">Retour au Dashboard</a>
                         </form>
                     </fieldset>
                 </div>

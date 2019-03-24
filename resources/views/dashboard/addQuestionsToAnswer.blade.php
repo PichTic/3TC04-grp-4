@@ -22,6 +22,7 @@
                                 <input type="text" class="form-control form-control-lg" id="question" name="question" aria-describedby="questionlHelp" placeholder="Entrez votre question">
                             </div>
                             <button type="submit" class="btn btn-lg btn-primary">Ajouter la question</button>
+                            <a href="{{route('home')}}" class="btn btn-lg float-right">Retour au Dashboard</a>
                         </form>
                     </fieldset>
                 </div>
