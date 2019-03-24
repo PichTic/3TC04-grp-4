@@ -11,7 +11,8 @@
                         <legend>Répondre à {{ $question->visitor->email }}</legend>
                         <form method="POST" action="{{route('answer.store', $question->id)}}">
                             @csrf
-                            <label for="question" class="col-form-label-lg">Question:</label> <input type="text" class="form-control form-control-lg" id="question" name="question" aria-describedby="question-" placeholder="Entrez votre réponse" value="{{ $question->body }}">
+                            <label for="question" class="col-form-label-lg">Question:</label>
+                            <textarea type="text" class="form-control form-control-lg" id="question" name="question">{{ $question->body }}</textarea>
                             <br/><br/>
                             <div class="form-group">
                                 <legend>Entrez la réponse ou ajouter une réponse déjà existante</legend>
@@ -21,11 +22,11 @@
                                 <label for="reponse" class="col-form-label-lg">Réponse(s) existant(s):</label>
                                 @forelse($answers as $answer)
                                     <div class="form-check">
-                                        <input type="radio" id="$answer->id" name="answer" value="$answer->id">
-                                        <label for="$answer->id">{{ $answer->body }}</label>
+                                        <input type="radio" id="reponseExistante" name="reponseExistante" value="{{ $answer->id }}">
+                                        <label for="reponseExistante">{{ $answer->body }}</label>
                                     </div>
                                 @empty
-                                <tr><td colspan="3">Aucune réponse en bdd</td></tr>
+                                <p>Aucune réponse en bdd</p>
                                 @endforelse
                             </div>
                             <button type="submit" class="btn btn-lg btn-primary">Envoyer et ajouter la réponse</button>

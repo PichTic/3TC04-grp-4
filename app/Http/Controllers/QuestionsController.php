@@ -14,7 +14,6 @@ class QuestionsController extends Controller
 {
     public function questionStore(StoreQuestionAndAnswer $request)
     {
-
         $answer = new Answer;
         $answer->body = $request->reponse;
         $answer->save();
@@ -22,8 +21,6 @@ class QuestionsController extends Controller
         $question = $answer->questions()->create([
             'body' => $request->question,
         ]);
-
-
 
         return redirect()->back();
     }
@@ -38,11 +35,24 @@ class QuestionsController extends Controller
 
     public function answerStore($id, StoreAnswer $request)
     {
-        $answer = new Answer;
-        $answer->body = $request->reponse;
-        $answer->save();
 
-        $question = Question::findOrFail($id);
+        $question = Question::find($id);
+        $question->update([
+            'body' => $request->question
+        ]);
+
+         if( $request->filled('reponse') ) {
+
+            $answer = new Answer;
+            $answer->body = $request->reponse;
+            $answer->save();
+
+        } else {
+
+            $answer = Answer::find($request->reponseExistante);
+
+        }
+
         $question->answer()->associate($answer);
         $question->save();
 

@@ -25,7 +25,9 @@ class StoreAnswer extends FormRequest
     public function rules()
     {
         return [
-            'reponse' => 'required'
+            'question' => 'required',
+            'reponse' => 'required_without:reponseExistante',
+            'reponseExistante' => 'required_without:reponse'
         ];
     }
 }
