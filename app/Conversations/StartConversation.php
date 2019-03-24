@@ -2,14 +2,15 @@
 
 namespace App\Conversations;
 
+use App\Visitor;
+use App\Question as VisitorQuestion;
 use Illuminate\Foundation\Inspiring;
+use App\Middleware\ReceivedMiddleware;
+use TomLingham\Searchy\Facades\Searchy;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Conversations\Conversation;
-use App\Middleware\ReceivedMiddleware;
-use App\Question as VisitorQuestion;
-use App\Visitor;
 
 class StartConversation extends Conversation
 {
@@ -36,12 +37,14 @@ class StartConversation extends Conversation
 
             if ($selectedText === 'yes' || $selectedValue === 'Of course') {
                 $this->ask("Je t'écoute", function (Answer $answer) {
-                    $getQuestion = VisitorQuestion::where('body', $answer->getText())->first();
+                    // $getQuestion = VisitorQuestion::where('body', $answer->getText())->first();
+
+                    $getQuestion = Searchy::questions('body')->query($answer->getText())->get()->toArray();
 
                     if(is_null($getQuestion)) {
                         $this->askAdmin();
                     } else {
-                        $getId = $getQuestion->id;
+                        $getId = $getQuestion[0]->id;
                         $response = VisitorQuestion::find($getId)->answer;
 
                         $this->say('La réponse à ta question : ' . $response->body);
