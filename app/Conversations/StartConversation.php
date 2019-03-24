@@ -20,7 +20,7 @@ class StartConversation extends Conversation
 
     public function getQuestion()
     {
-      $question = Question::create('Veux-tu me poser une question ?')
+      $question = Question::create('Bonjour, veux-tu me poser une question ?')
         ->fallback("Désolé, je n'ai pas compris ta réponse")
         ->addButtons([
             Button::create('Oui')->value('yes'),
@@ -34,7 +34,7 @@ class StartConversation extends Conversation
                 $selectedText = $answer->getText();
 
             }
-            else{ $selectedText = 'yes';} // on force le OUI si il pose la question;
+            else{ $selectedText = 'yes';  $this->say('Je prends ça pour un oui :) ');} // on force le OUI si il pose la question;
 
             if ($selectedText === 'yes' || $selectedValue === 'Of course') {
                 $this->ask("Je t'écoute", function (Answer $answer) {
@@ -77,6 +77,7 @@ class StartConversation extends Conversation
                     $this->say('Je reste à ta disposition !');
                 }
             }
+            else{$this->repeat();} // on force le OUI si il pose la question;
 
         });
     }
@@ -99,6 +100,7 @@ class StartConversation extends Conversation
                     $this->askEmail();
                 }
             }
+            else{ $this->repeat();}
 
         });
     }
