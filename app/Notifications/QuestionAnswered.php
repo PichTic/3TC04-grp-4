@@ -11,15 +11,17 @@ class QuestionAnswered extends Notification
 {
     use Queueable;
     protected $answer;
+    protected $question;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($answer)
+    public function __construct($answer, $question)
     {
         $this->answer = $answer;
+        $this->question = $question;
     }
 
     /**
@@ -42,9 +44,10 @@ class QuestionAnswered extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->line('Thank you for using our application!')
-                    ->line($this->answer);
+                    ->line('Bonjour,')
+                    ->line('Vous nous avez posez cette question : ' . $this->question)
+                    ->line('Voici la réponse : ' . $this->answer)
+                    ->line("Merci d'avoir utiliser nos services");
     }
 
     /**
