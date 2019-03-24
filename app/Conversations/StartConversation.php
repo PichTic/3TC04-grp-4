@@ -28,7 +28,7 @@ class StartConversation extends Conversation
         ]);
 
         $this->ask($question, function (Answer $answer) {
-
+            //prévoir le cas ou l'utilisateur se trompe et pose directement un question
             if ($answer->isInteractiveMessageReply()) {
                 $selectedValue = $answer->getValue();
                 $selectedText = $answer->getText();
@@ -37,7 +37,6 @@ class StartConversation extends Conversation
 
             if ($selectedText === 'yes' || $selectedValue === 'Of course') {
                 $this->ask("Je t'écoute", function (Answer $answer) {
-                    // $getQuestion = VisitorQuestion::where('body', $answer->getText())->first();
 
                     $getQuestion = Searchy::questions('body')->query($answer->getText())->get()->toArray();
 
@@ -101,6 +100,7 @@ class StartConversation extends Conversation
     }
 
     public function askEmail()
+    //ici enregistrer le couple email / question pour créer un Visitor et faire apparaitre sa question dans le dashboard Procédure : voir DatabaseSeeder.php
     {
         $this->ask("Donne moi ton Email qu'on puisse t'envoyer la réponse", function (Answer $answer) {
 
