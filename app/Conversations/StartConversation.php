@@ -106,14 +106,6 @@ class StartConversation extends Conversation
     //ici enregistrer le couple email / question pour créer un Visitor et faire apparaitre sa question dans le dashboard Procédure : voir DatabaseSeeder.php
     {
         $this->ask("Donne moi ton Email qu'on puisse t'envoyer la réponse", function (Answer $answer) {
-             $validator = Validator::make(['email' => $answer->getText()], [
-                'email' => 'email',
-            ]);
-
-            if ($validator->fails()) {
-                return $this->repeat('That doesn\'t look like a valid email. Please enter a valid email.');
-            }
-
             $this->email = $answer->getText();
 
             $this->say("Merci, on te recontactera à l'adresse suivante : " . $this->email);
