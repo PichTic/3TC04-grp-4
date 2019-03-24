@@ -13,13 +13,15 @@
             <tr>
                 <td>{{ $question->visitor->email }}</td>
                 <td>{{ $question->body }}</td>
-                <td>
-                    <a href="{{ route('question.answer', $question->id) }}" class="btn btn-primary text-white"><i class="fas fa-pen"></i></a>
-                    <form class="d-inline" method="POST" action="{{ route('answer.delete', $question->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger"><i class="fas fa-times"></i></button>
-                    </form>
+                <td class="text-right">
+                    <div class="btn-group" role="group">
+                        <a href="{{ route('question.answer', $question->id) }}" class="btn btn-primary text-white"><i class="fas fa-pen"></i></a>
+                        <form class="d-inline" method="POST" action="{{ route('answer.delete', $question->id) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="button"><i class="fas fa-times"></i></button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         @empty
