@@ -30,9 +30,10 @@ class QuestionsController extends Controller
 
     public function answer($id)
     {
-        $question = Question::find($id);
 
-        return view('dashboard.AnswerVisitor', compact('question'));
+        $question = Question::find($id);
+        $answers = Answer::with('questions')->get();
+        return view('dashboard.AnswerVisitor', compact('question', 'answers'));
     }
 
     public function answerStore($id, StoreAnswer $request)
