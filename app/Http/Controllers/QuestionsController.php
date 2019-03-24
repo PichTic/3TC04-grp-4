@@ -46,7 +46,7 @@ class QuestionsController extends Controller
         $question->answer()->associate($answer);
         $question->save();
 
-        Notification::route('mail', $question->visitor->email)->notify(new QuestionAnswered($request->reponse));
+        Notification::route('mail', $question->visitor->email)->notify(new QuestionAnswered($request->reponse, $question->body));
 
         return redirect()->route('home');
     }
