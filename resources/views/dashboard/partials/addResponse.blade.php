@@ -4,14 +4,14 @@
         <thead>
             <tr>
                 <th>Réponse</th>
-                <th>Action</th>
+                <th class="text-right">Action</th>
             </tr>
         </thead>
         <tbody>
         @forelse($answers as $answer)
             <tr>
                 <td>{{ $answer->body }}</td>
-                <td>
+                <td class="text-right">
                     <a href="{{ route('answer', $answer->id) }}" class="btn btn-primary text-white"><i class="fas fa-pen"></i></a>
                 </td>
             </tr>

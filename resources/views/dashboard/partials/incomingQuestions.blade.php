@@ -5,7 +5,7 @@
             <tr>
                 <th>Email</th>
                 <th>Question</th>
-                <th>Action</th>
+                <th class="text-right">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -13,7 +13,7 @@
             <tr>
                 <td>{{ $question->visitor->email }}</td>
                 <td>{{ $question->body }}</td>
-                <td>
+                <td class="text-right">
                     <a href="{{ route('question.answer', $question->id) }}" class="btn btn-primary text-white"><i class="fas fa-pen"></i></a>
                     <form class="d-inline" method="POST" action="{{ route('answer.delete', $question->id) }}">
                         @csrf
