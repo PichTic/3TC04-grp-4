@@ -10,8 +10,8 @@ class Answer extends Model
 
     protected $fillable = ['body'];
 
-     public function question()
+     public function questions()
     {
-        return $this->belongsTo('App\Question');
+        return $this->hasMany('App\Question');
     }
 }

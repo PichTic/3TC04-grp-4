@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Answer;
 use App\Question;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAnswer;
@@ -13,13 +14,16 @@ class QuestionsController extends Controller
 {
     public function questionStore(StoreQuestionAndAnswer $request)
     {
-        $question = new Question;
-        $question->body = $request->question;
-        $question->save();
 
-        $answer = $question->answer()->create([
-            'body' => $request->reponse,
+        $answer = new Answer;
+        $answer->body = $request->reponse;
+        $answer->save();
+
+        $question = $answer->questions()->create([
+            'body' => $request->question,
         ]);
+
+
 
         return redirect()->back();
     }
@@ -33,11 +37,13 @@ class QuestionsController extends Controller
 
     public function answerStore($id, StoreAnswer $request)
     {
-        $question = Question::findOrFail($id);
+        $answer = new Answer;
+        $answer->body = $request->reponse;
+        $answer->save();
 
-        $answer = $question->answer()->create([
-            'body' => $request->reponse,
-        ]);
+        $question = Question::findOrFail($id);
+        $question->answer()->associate($answer);
+        $question->save();
 
         Notification::route('mail', $question->visitor->email)->notify(new QuestionAnswered($request->reponse));
 
@@ -49,4 +55,5 @@ class QuestionsController extends Controller
         $question = Question::findOrFail($id)->delete();
         return redirect()->route('home');
     }
+
 }

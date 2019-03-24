@@ -23,6 +23,8 @@ Auth::routes();
 Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('/questions', 'QuestionsController@questionStore')->name('questions.store');
+    Route::get('/answer/{id}', 'AnswersController@questions')->name('answer');
+    Route::post('/answer/{id}', 'AnswersController@questionsAdd')->name('questions.add');
     Route::get('/question/{id}', 'QuestionsController@answer')->name('question.answer');
     Route::post('/question/{id}', 'QuestionsController@answerStore')->name('answer.store');
     Route::delete('/question/{id}', 'QuestionsController@answerDelete')->name('answer.delete');
