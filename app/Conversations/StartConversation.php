@@ -11,6 +11,7 @@ use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Conversations\Conversation;
+use Validator;
 class StartConversation extends Conversation
 {
     protected $question;
@@ -106,6 +107,13 @@ class StartConversation extends Conversation
     //ici enregistrer le couple email / question pour créer un Visitor et faire apparaitre sa question dans le dashboard Procédure : voir DatabaseSeeder.php
     {
         $this->ask("Donne moi ton Email qu'on puisse t'envoyer la réponse", function (Answer $answer) {
+            $validator = Validator::make(['email' => $answer->getText()], [// permet de vérifier l'email avec l'aide de Laravel
+                'email' => 'email',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->repeat('Oups, l\'email que tu as entré est incorrect. Donne moi ton Email qu\'on puisse t\'envoyer la réponse');
+            }
             $this->email = $answer->getText();
 
             $this->say("Merci, on te recontactera à l'adresse suivante : " . $this->email);
