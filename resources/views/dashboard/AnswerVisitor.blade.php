@@ -22,8 +22,8 @@
                                 <label for="reponse" class="col-form-label-lg">Réponse(s) existant(s):</label>
                                 @forelse($answers as $answer)
                                     <div class="form-check">
-                                        <input type="radio" id="reponseExistante" name="reponseExistante" value="{{ $answer->id }}">
-                                        <label for="reponseExistante">{{ $answer->body }}</label>
+                                        <input type="radio" id="reponseExistante_{{$answer->id}}" name="reponseExistante" value="{{ $answer->id }}">
+                                        <label for="reponseExistante_{{$answer->id}}">{{ $answer->body }}</label>
                                     </div>
                                 @empty
                                 <p>Aucune réponse en bdd</p>
