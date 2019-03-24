@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Conversations;
 
+namespace App\Conversations;
 use App\Visitor;
 use App\Question as VisitorQuestion;
 use Illuminate\Foundation\Inspiring;
@@ -11,7 +11,6 @@ use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Question;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Conversations\Conversation;
-
 class StartConversation extends Conversation
 {
     protected $question;
@@ -28,19 +27,23 @@ class StartConversation extends Conversation
         ]);
 
         $this->ask($question, function (Answer $answer) {
-            //prévoir le cas ou l'utilisateur se trompe et pose directement un question
+            //prévoir le cas ou l'utilisateur se trompe et pose directement un question: OK
             if ($answer->isInteractiveMessageReply()) {
                 $selectedValue = $answer->getValue();
                 $selectedText = $answer->getText();
 
             }
+            else{ $selectedText = 'yes';} // on force le OUI si il pose la question;
 
             if ($selectedText === 'yes' || $selectedValue === 'Of course') {
                 $this->ask("Je t'écoute", function (Answer $answer) {
 
                     $getQuestion = Searchy::questions('body')->query($answer->getText())->get()->toArray();
+                    $this->bot->userStorage()->save([
+                        'question' => $answer->getText(),
+                        ]);
 
-                    if(is_null($getQuestion)) {
+                    if(isset($getQuestion)) {
                         $this->askAdmin();
                     } else {
                         $getId = $getQuestion[0]->id;
@@ -103,10 +106,25 @@ class StartConversation extends Conversation
     //ici enregistrer le couple email / question pour créer un Visitor et faire apparaitre sa question dans le dashboard Procédure : voir DatabaseSeeder.php
     {
         $this->ask("Donne moi ton Email qu'on puisse t'envoyer la réponse", function (Answer $answer) {
+             $validator = Validator::make(['email' => $answer->getText()], [
+                'email' => 'email',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->repeat('That doesn\'t look like a valid email. Please enter a valid email.');
+            }
 
             $this->email = $answer->getText();
 
             $this->say("Merci, on te recontactera à l'adresse suivante : " . $this->email);
+            $visitor = new Visitor(['email' => $this->email]);
+
+            $question_ml = new App\Question;
+            $questionAsked = $this->bot->userStorage()->find();
+            $question_ml->body = $questionAsked->get('question');
+            $question_ml->save();
+
+            $question_ml->visitor()->save($visitor);
         });
     }
 
