@@ -40,11 +40,12 @@ class StartConversation extends Conversation
                 $this->ask("Je t'écoute", function (Answer $answer) {
 
                     $getQuestion = Searchy::questions('body')->query($answer->getText())->get()->toArray();
+
                     $this->bot->userStorage()->save([
                         'question' => $answer->getText(),
                         ]);
 
-                    if(isset($getQuestion)) {
+                    if(count($getQuestion) === 0) {
                         $this->askAdmin();
                     } else {
                         $getId = $getQuestion[0]->id;
